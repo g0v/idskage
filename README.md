@@ -19,7 +19,15 @@ Generate Kage glyph format from IDS
   踫到「明」時，先查 glypheme 是否含「明」的組字資訊(即kage input format)，若有直接使用，停止遞回。
   如果沒有，則查 decompose，取得「明」=「⿰日月」，遞迴算框。
   
-
+* 建議的test suite 順序
+ 1. ⿰日月  //組只有末級部件的IDS
+ 2. 明      //顯示已有字框的複合部件
+ 3. ⿱艹明  //組含有複合部件的IDS，且此複合部件(明)已有庫存字框
+ 4. ⿱大萌  //組含有複合部件的IDS，且此複合部件(萌)沒有庫存有字框，必須計算。
+ 5. 加上完整的 IDS (chise database, Extension C,D,E) 參考 https://github.com/ksanaforge/kzy/tree/master/components/kzy-chise
+ 6. 找出構字功力強的常用部件庫存字框(可從glyphwiki dump 抽取)，只需放一兩千個庫存字框就可以涵蓋大部份的組字式(比方說「明」就是一個構字能力很強的部件)。常用部件才值得放入庫存，以降低client side開銷，罕用複合部件使用率極低，醜一些無所妨。
+ 7. 組招財進寶。The Holy Grail of CJK font generator.
+ 
 * 改良空間：
  1. 根據部件的複雜度算出適當比例，如「⿰氵森」和「⿰氵夕」，潹的氵應佔較大比例。
  2. 包含型部件。「⿴凵口」和「⿶凵口」是否產生相同結果？
