@@ -16,8 +16,8 @@ Generate Kage glyph format from IDS
   
 
 * 例二：⿱艹明 (複合部件)
-  踫到「明」時，先查 glypheme 是否含「明」的組字資訊(即kage input format)，若有直接使用，停止遞回。
-  如果沒有，則查 decompose，取得「明」=「⿰日月」，遞迴算框。
+  踫到「明」時，先找「明」的庫存字框 (即kage input format)，若有直接使用，停止遞回。
+  如果沒有，則查ids資料庫，取得「明」=「⿰日月」，遞迴算框。
   
 * 建議的test suite 順序
  1. ⿰日月  //組只有末級部件的IDS
