@@ -25,7 +25,7 @@ Generate Kage glyph format from IDS
  3. ⿱艹明  //組含有複合部件的IDS，且此複合部件(明)已有庫存字框
  4. ⿱大萌  //組含有複合部件的IDS，且此複合部件(萌)沒有庫存有字框，必須計算。
  5. 加上完整的 IDS (chise database, Extension C,D,E) 參考 https://github.com/ksanaforge/kzy/tree/master/components/kzy-chise
- 6. 找出構字功力強的常用部件庫存字框(可從glyphwiki dump 抽取)，只需放一兩千個庫存字框就可以涵蓋大部份的組字式(比方說「明」就是一個構字能力很強的部件)。常用部件才值得放入庫存，以降低client side開銷，罕用複合部件使用率極低，醜一些無所妨。
+ 6. 找出構字功力強的常用部件，放到庫存字框(可從glyphwiki dump 抽取)，只需放一兩千個庫存字框就可以涵蓋大部份的組字式(比方說「明」就是一個構字能力很強的部件)。常用部件才值得放入庫存，以降低client side開銷，罕用複合部件使用率極低，醜一些無妨。
  7. 組招財進寶。The Holy Grail of CJK font generator.
  
 * 改良空間：
