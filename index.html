@@ -9,6 +9,7 @@
 <script src="src/render.js"></script>
 <style>
 input, button{font-size:200%;}
+textarea {font-size:150%;}
 </style>
 </head>
 <script>
@@ -16,9 +17,19 @@ input, button{font-size:200%;}
 
 		drawglyph(document.getElementById("ids").value,512);
 	}
+	var addidc=function(e) {
+		document.getElementById("ids").value=e.target.innerHTML+document.getElementById("ids").value;	
+	}
 </script>
-<div id="main">
-<input id="ids" value="⿱艹⿰日月"></input><button onClick="generate()">組字</button><br/>
+<div id="main"><!-- ⿱艹⿰日月 //-->
+<button onClick="addidc(event)">⿱</button><button onClick="addidc(event)">⿰</button>
+<textarea>
+⿱月日
+⿱大明
+萌
+</textarea>
+<input id="ids" value="⿱月日"></input><button onClick="generate()">組字</button><br/>
+
 <canvas id="canvas" width="512" height="512"></canvas>
 
 

@@ -6,9 +6,9 @@ yapcheahshen@gmail.com at MOEDICT 萌典松 2015/3/28
 */
 
 
-  var isIDC=function(c) {	
-    if (c==0x2ff2||c==0x2ff3) return 3;
-    else if (c>=0x2ff0 && c<=0x2fff) return 2;
+  var getOperandByIDC=function(c) {	
+    if (c==0x2ff2||c==0x2ff3) return 3; 
+    else if (c>=0x2ff0 && c<=0x2fff) return 2; 
     else return 0;
   }
   
@@ -41,9 +41,9 @@ yapcheahshen@gmail.com at MOEDICT 萌典松 2015/3/28
   	  }
   	  return f;
   }
-  function fitparts(parent,frame) {
+  var fitparts=function(parent,frame) {
 	var idc=parent["ch"].charCodeAt(0);
-	var operand=isIDC(idc);
+	var operand=getOperandByIDC(idc);
 	var i=1;
   	while (operand>0) {
   		f=framebypart(idc,frame,i-1);
@@ -54,43 +54,52 @@ yapcheahshen@gmail.com at MOEDICT 萌典松 2015/3/28
   		i++;operand--;
   	}
   }
-
   var idstree={};//a tree to hold IDS
-//⿱⿰日月空 ==> {ch:"⿱" , 
-//                 p1: { ch:"⿰", 
-//                      p1:{ch:"日",frame:{0.0,0.5,0.0,0.5}},
-//                      p2:{ch:"月",frame:{0.5,1.0,0.0,0.5}}},
-//                 p2:{ch:"空",     frame:{0.0,1.0,0.5,1.0}}};
-  
-  function addchild(ids,parent,frame)   {
+
+  var addchild=function (ids,parent,frame)   {
   	var idc=ids.charCodeAt(0);
-  	var operand=isIDC(idc);
+  	var operand=getOperandByIDC(idc);
+
+    if (!operand) {
+      var childids=decompose[ids[0]];
+      if (childids) {
+        return addchild(childids,parent,frame);
+      }
+    }
   	parent.ch=ids[0];
     ids=ids.substring(1,ids.length);
     var i=1;
     while (operand>0) {
-		  op=isIDC(ids.charCodeAt(0));
+		  op=getOperandByIDC(ids.charCodeAt(0));
 		  var f=framebypart(idc,frame,i-1);
       var child=parent["p"+i]={"ch":ids[0]}; // create a new child
 		  if (op>0) {//IDC
 		    ids=addchild(ids,child,f);
 		    fitparts(child, f);
       } else { //normal characters
+        if (glypheme[ids[0]]) { //it is a part
+
+        } else { //try IDS
+          childids=decompose[ids[0]];
+          ids=addchild(childids,child,f);
+        }
+
         ids=ids.substring(1,ids.length); // consume first char
         child.frame=f;
+
       }
 		  i++;operand--;
-	 }
-	 return ids;
+	  }
+	  return ids;
   }
 
   var drawparts=function(output,parent, x,y,w,h) {
   	var idc=parent.ch.charCodeAt(0);
-  	var operand=isIDC(idc);
+  	var operand=getOperandByIDC(idc);
   	var i=1;
   	while (operand>0) {
   		var child=parent["p"+i];
-  		op=isIDC(child.ch.charCodeAt(0));
+  		op=getOperandByIDC(child.ch.charCodeAt(0));
   		if (op>0) drawparts(output,child, x,y,w,h);
           else {
             var f=child.frame;
@@ -100,14 +109,12 @@ yapcheahshen@gmail.com at MOEDICT 萌典松 2015/3/28
             output.push({part:child.ch,x:f.x1*w,y:f.y1*h,w:w*xr,h:h*yr});
           }
   		i++;operand--;
-  	}  	  
-
+  	} 
   }
-  drawdgg=function(ids) {
+  var drawdgg=function(ids) {
   	addchild(ids,idstree,fullframe());
     var output=[];
     drawparts(output,idstree, 0,0,200,200); //glyphwiki max frame
-    //console.log(output);
     return output;
   }
   window.drawdgg=drawdgg;
