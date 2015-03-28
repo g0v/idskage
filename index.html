@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=1"/>
+<script src="lib/kageall.js"></script>
+<script src="src/mockdata.js"></script>
+<script src="src/autofit.js"></script>
+<script src="src/render.js"></script>
+<style>
+input, button{font-size:200%;}
+</style>
+</head>
+<script>
+	var generate=function(){
+
+		drawglyph(document.getElementById("ids").value,512);
+	}
+</script>
+<div id="main">
+<input id="ids" value="⿱艹⿰日月"></input><button onClick="generate()">組字</button><br/>
+<canvas id="canvas" width="512" height="512"></canvas>
+
+
+</div>
+</html>
